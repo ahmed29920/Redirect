@@ -3,6 +3,11 @@
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TesterController;
+use App\Http\Controllers\CommissaryController;
+use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
@@ -67,6 +72,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/login', function () {
 		return view('dashboard');
 	})->name('sign-up');
+
+
+	Route::resource('/users', UserController::class);
+	Route::resource('/admins', AdminController::class);
+	Route::get('admins/remove/{id}', [AdminController::class,  'removeAdmin']);
+	Route::resource('/testers', TesterController::class);
+	Route::get('testers/remove/{id}', [TesterController::class,  'removeTester']);
+	Route::resource('/commissaries', CommissaryController::class);
+	Route::get('commissaries/remove/{id}', [CommissaryController::class,  'removeCommissary']);
+
 });
 
 

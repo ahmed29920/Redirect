@@ -31,9 +31,9 @@ class RegisterController extends Controller
         session()->flash('success', 'Your account has been created.');
         $user = User::create($attributes);
         // to add client
-        // $new_user = User::where('email' , $request['email'])->get();
-        // $client = ['user_id' , $new_user[0]->id] ;
-        // Client::create($client);
+        $new_user = User::where('email' , $request['email'])->get();
+        $client = ['user_id' => $new_user[0]->id] ;
+        Client::create($client);
         Auth::login($user); 
         return redirect('/dashboard');
     }
