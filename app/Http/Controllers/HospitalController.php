@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Validation\Rule;
+use App\Models\Bank;
+use App\Models\User;
+use App\Models\Tester;
+use App\Models\Commissary;
+use App\Models\Client;
+use App\Models\Hospital;
 class HospitalController extends Controller
 {
     /**
@@ -13,7 +19,8 @@ class HospitalController extends Controller
      */
     public function index()
     {
-        //
+        $hospitals = Hospital::all();
+        return view('hospital\index' , ['hospitals' => $hospitals]);
     }
 
     /**
@@ -23,7 +30,7 @@ class HospitalController extends Controller
      */
     public function create()
     {
-        //
+        return view('hospital\create');
     }
 
     /**
@@ -34,7 +41,27 @@ class HospitalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = request()->validate([
+            'name' => ['required', 'max:50'],
+            'email' => ['required', 'email', 'max:50', Rule::unique('users', 'email')],
+            'password' => ['required', 'min:5', 'max:20'],
+            'phone' => ['required', 'min:10', 'max:12'],
+        ]);
+        $attributes['password'] = bcrypt($attributes['password'] );
+        $attributes['role'] = 'Hospital';
+        $user = User::create($attributes);
+        $hospital  = Hospital::create(['user_id' => $user->id , 'location' => $request->address]);
+        
+        Bank::create(['hospital_id' => $hospital->id , 'amount' => 0 , 'type' => 'A+' ]);
+        Bank::create(['hospital_id' => $hospital->id , 'amount' => 0 , 'type' => 'B+' ]);
+        Bank::create(['hospital_id' => $hospital->id , 'amount' => 0 , 'type' => 'O+' ]);
+        Bank::create(['hospital_id' => $hospital->id , 'amount' => 0 , 'type' => 'AB+' ]);
+        Bank::create(['hospital_id' => $hospital->id , 'amount' => 0 , 'type' => 'A-' ]);
+        Bank::create(['hospital_id' => $hospital->id , 'amount' => 0 , 'type' => 'B-' ]);
+        Bank::create(['hospital_id' => $hospital->id , 'amount' => 0 , 'type' => 'AB-' ]);
+        Bank::create(['hospital_id' => $hospital->id , 'amount' => 0 , 'type' => 'O-' ]);
+        session()->flash('success', 'Hospital created successfully');
+        return redirect('Hospital');
     }
 
     /**
@@ -54,9 +81,9 @@ class HospitalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Hospital $hospital)
     {
-        //
+        return view('hospital/create', [ 'hospital' => $hospital]);
     }
 
     /**
@@ -66,9 +93,13 @@ class HospitalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Hospital $hospital)
     {
-        //
+        $data = $request->only(['name', 'email', 'phone']);
+        $user = User::where('id' , $hospital->user_id)->get();
+        $user[0]->update($data);
+        $hospital->update(['address' => $request->address]);
+        return redirect('/hospitals')->with('success','Hospital updated successfully');
     }
 
     /**

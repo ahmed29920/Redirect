@@ -30,6 +30,27 @@
           <span class="nav-link-text ms-1">Dashboard</span>
         </a>
       </li>
+      <!--  -->
+      <li class="nav-item mt-2">
+        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Hospitals</h6>
+      </li>
+      <li class="nav-item pb-2">
+        <a class="nav-link {{ (Request::is('hospitals') ? 'active' : '') }}" href="{{ url('hospitals') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('hospitals') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+            </div>
+            <span class="nav-link-text ms-1">Show</span>
+        </a>
+      </li>
+      <li class="nav-item pb-2">
+        <a class="nav-link {{ (Request::is('hospitals/create') ? 'active' : '') }}" href="{{ url('hospitals') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i style="font-size: 1rem;" class="fas fa-lg fa-plus ps-2 pe-2 text-center text-dark {{ (Request::is('hospitals/create') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+            </div>
+            <span class="nav-link-text ms-1">Create</span>
+        </a>
+      </li>
+      <!--  -->
       <li class="nav-item mt-2">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Users</h6>
       </li>
@@ -109,6 +130,27 @@
             <span class="nav-link-text ms-1">Create</span>
         </a>
       </li>
+      <!--  -->
+      <li class="nav-item mt-2">
+        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Clients</h6>
+      </li>
+      <li class="nav-item pb-2">
+        <a class="nav-link {{ (Request::is('clients') ? 'active' : '') }}" href="{{ url('clients') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('clients') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+            </div>
+            <span class="nav-link-text ms-1">Show</span>
+        </a>
+      </li>
+      <li class="nav-item pb-2">
+        <a class="nav-link {{ (Request::is('clients/create') ? 'active' : '') }}" href="{{ url('clients') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i style="font-size: 1rem;" class="fas fa-lg fa-plus ps-2 pe-2 text-center text-dark {{ (Request::is('clients/create') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+            </div>
+            <span class="nav-link-text ms-1">Create</span>
+        </a>
+      </li>
+      
       <!--  -->
       <!-- <li class="nav-item mt-2">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Laravel Examples</h6>

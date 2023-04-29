@@ -15,14 +15,8 @@ return new class extends Migration
     {
         Schema::create('banks', function (Blueprint $table) {
             $table->id();
-            $table->integer('A+');
-            $table->integer('A-');
-            $table->integer('B-');
-            $table->integer('B+');
-            $table->integer('AB+');
-            $table->integer('AB-');
-            $table->integer('O-');
-            $table->integer('O+');
+            $table->string('type');
+            $table->integer('amount');
             $table->unsignedBigInteger('hospital_id')->unsigned();
             $table->foreign('hospital_id')->references('id')->on('hospitals')->onDelete('cascade');
             $table->timestamps();

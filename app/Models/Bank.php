@@ -10,13 +10,7 @@ class Bank extends Model
     use HasFactory;
     protected $fillable = [
         'hospital_id',
-        'A+',
-        'A-',
-        'B+',
-        'B-',
-        'AB-',
-        'AB+',
-        'O-',
-        'O+',
+        'type' ,
+        'amount',
     ];
 }

@@ -11,6 +11,8 @@ use App\Models\Admin;
 use App\Models\Tester;
 use App\Models\Commissary;
 use App\Models\Client;
+use App\Models\Hospital;
+
 
 class User extends Authenticatable
 {
@@ -61,6 +63,16 @@ class User extends Authenticatable
     public function commissary()
     {
         return $this->hasMany(Commissary::class);
+    }
+
+    public function client()
+    {
+        return $this->hasMany(Client::class);
+    }
+
+    public function hospital()
+    {
+        return $this->hasMany(Hospital::class);
     }
     
 }

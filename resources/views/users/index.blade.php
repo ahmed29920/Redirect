@@ -70,9 +70,6 @@
                                         <a href="{{ route('users.edit', $user->id) }}" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
                                             <i class="fas fa-user-edit text-info"></i>
                                         </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-danger"></i>
-                                        </span>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -92,4 +89,6 @@
       $('div.alert').hide(3000);
     });
   </script>
+ 
+
 @endsection

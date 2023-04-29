@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Client;
@@ -9,7 +10,6 @@ use App\Models\Admin;
 use App\Models\Tester;
 use App\Models\Commissary;
 use App\Models\Hospital;
-
 class UserController extends Controller
 {
     /**
@@ -41,7 +41,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = request()->validate([
+            'name' => ['required', 'max:50'],
+            'email' => ['required', 'email', 'max:50', Rule::unique('users', 'email')],
+            'password' => ['required', 'min:5', 'max:20'],
+            'phone' => ['required', 'min:10', 'max:12'],
+        ]);
+        $attributes['password'] = bcrypt($attributes['password'] );
+        $attributes['role'] = $request->role;
+        $user = User::create($attributes);
+        switch ($request->role) {
+            case 'Client':
+                Client::create(['user_id' => $user->id]);
+                break;
+            case 'Tester':
+                Tester::create(['user_id' => $user->id]);
+                break;
+            case 'Commissary':
+                Commissary::create(['user_id' => $user->id]);
+                break; 
+            case 'Admin':
+                Admin::create(['user_id' => $user->id]);
+                break;            
+        }
+        session()->flash('success', 'Admin created successfully');
+        return redirect('users');
     }
 
     /**
@@ -167,4 +191,6 @@ class UserController extends Controller
     {
         //
     }
+
+    
 }

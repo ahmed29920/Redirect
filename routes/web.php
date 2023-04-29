@@ -6,6 +6,7 @@ use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TesterController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommissaryController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\RegisterController;
@@ -27,9 +28,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::get('/', [HomeController::class, 'home']);
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::group(['middleware' => 'CheckClient' ], function () {
 
-    Route::get('/', [HomeController::class, 'home']);
 	Route::get('dashboard', function () {
 		return view('dashboard');
 	})->name('dashboard');
@@ -75,13 +77,21 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	Route::resource('/users', UserController::class);
+
+	Route::resource('/clients', ClientController::class);
+	Route::get('clients/remove/{id}', [ClientController::class,  'removeClient']);
+	
 	Route::resource('/admins', AdminController::class);
 	Route::get('admins/remove/{id}', [AdminController::class,  'removeAdmin']);
+
 	Route::resource('/testers', TesterController::class);
 	Route::get('testers/remove/{id}', [TesterController::class,  'removeTester']);
+
 	Route::resource('/commissaries', CommissaryController::class);
 	Route::get('commissaries/remove/{id}', [CommissaryController::class,  'removeCommissary']);
 
+	Route::resource('/hospitals', HospitalController::class);
+	// Route::get('commissaries/remove/{id}', [CommissaryController::class,  'removeCommissary']);
 });
 
 
