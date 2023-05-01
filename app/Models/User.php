@@ -12,6 +12,7 @@ use App\Models\Tester;
 use App\Models\Commissary;
 use App\Models\Client;
 use App\Models\Hospital;
+use App\Models\ClientRequest;
 
 
 class User extends Authenticatable
@@ -73,6 +74,12 @@ class User extends Authenticatable
     public function hospital()
     {
         return $this->hasMany(Hospital::class);
+    }
+
+
+    public function clientRequest()
+    {
+        return $this->belongsTo(ClientRequest::class , 'client_id' , 'id');
     }
     
 }

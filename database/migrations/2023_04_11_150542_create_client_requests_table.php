@@ -22,11 +22,12 @@ return new class extends Migration
             $table->enum('state' , [ 'Pending' , 'Delivering' , 'Testing' , 'Success' , 'Fail' ]);
             $table->enum('type_of_request' , [ 'Donate' , 'Request' ]);
             $table->enum('way' , [ 'Home' , 'Hospital' ]);
-            $table->boolean('IsOk');
-            $table->string('note');
+            $table->string('location')->nullable();
+            $table->boolean('IsOk')->nullable();
+            $table->string('note')->nullable();
             //client
             $table->unsignedBigInteger('client_id')->unsigned();
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
             // tester
             $table->unsignedBigInteger('tester_id')->unsigned()->nullable();
             $table->foreign('tester_id')->references('id')->on('testers')->onDelete('cascade');

@@ -9,6 +9,7 @@ use App\Http\Controllers\TesterController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommissaryController;
 use App\Http\Controllers\HospitalController;
+use App\Http\Controllers\ClientRequestsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
@@ -30,54 +31,27 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/requests/client-get',[ClientRequestsController::class ,'getRequest'])->name('getRequest');
+Route::get('/requests/client-donate', [ClientRequestsController::class,'donateRequest'])->name('donateRequest');
+Route::resource('/requests/client', ClientRequestsController::class);
+
 Route::group(['middleware' => 'CheckClient' ], function () {
 
 	Route::get('dashboard', function () {
 		return view('dashboard');
 	})->name('dashboard');
 
-	Route::get('billing', function () {
-		return view('billing');
-	})->name('billing');
-
 	Route::get('profile', function () {
 		return view('profile');
 	})->name('profile');
-
-	Route::get('rtl', function () {
-		return view('rtl');
-	})->name('rtl');
 
 	Route::get('user-management', function () {
 		return view('laravel-examples/user-management');
 	})->name('user-management');
 
-	Route::get('tables', function () {
-		return view('tables');
-	})->name('tables');
-
-    Route::get('virtual-reality', function () {
-		return view('virtual-reality');
-	})->name('virtual-reality');
-
-    Route::get('static-sign-in', function () {
-		return view('static-sign-in');
-	})->name('sign-in');
-
-    Route::get('static-sign-up', function () {
-		return view('static-sign-up');
-	})->name('sign-up');
-
-    Route::get('/logout', [SessionsController::class, 'destroy']);
-	Route::get('/user-profile', [InfoUserController::class, 'create']);
-	Route::post('/user-profile', [InfoUserController::class, 'store']);
-    Route::get('/login', function () {
-		return view('dashboard');
-	})->name('sign-up');
-
 
 	Route::resource('/users', UserController::class);
-
+	
 	Route::resource('/clients', ClientController::class);
 	Route::get('clients/remove/{id}', [ClientController::class,  'removeClient']);
 	
@@ -93,9 +67,13 @@ Route::group(['middleware' => 'CheckClient' ], function () {
 	Route::resource('/hospitals', HospitalController::class);
 	// Route::get('commissaries/remove/{id}', [CommissaryController::class,  'removeCommissary']);
 });
+Route::group(['middleware' => 'auth'], function () {
+	Route::get('/logout', [SessionsController::class, 'destroy']);
+	Route::get('/user-profile', [InfoUserController::class, 'create']);
+	Route::post('/user-profile', [InfoUserController::class, 'store']);
+    Route::get('/login', function () { return view('dashboard');})->name('sign-up');
 
-
-
+});
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [RegisterController::class, 'create']);
     Route::post('/register', [RegisterController::class, 'store']);

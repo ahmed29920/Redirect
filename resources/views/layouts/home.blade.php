@@ -27,27 +27,35 @@
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active p-2 p-lg-3 " aria-current="page" href="home.html">HOME</a>
+                        <a class="nav-link active p-2 p-lg-3 " aria-current="page" href="/">HOME</a>
                         <li class="nav-item">
                             <a class="nav-link p-2 p-lg-3" href="{{route('about')}}">ABOUT US</a>
                         </li>
                     </li>
+                    @if(!Auth())
                     <li class="nav-item ">
                         <a class="nav-link p-2  p-lg-3" href="log-in.html">SIGN IN</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link p-2 p-lg-3" href="registeration.html">SIGN UP</a>
                     </li>
+                    @else
+                    <li class="nav-item ">
+                        <a href="{{ url('/logout')}}" class="nav-link p-2 p-lg-3">
+                            <span class="d-sm-inline d-none">Sign Out</span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link p-2 p-lg-3" href="clint-dashbord.html">MY PROFILE</a>
                     </li>
+                    @endif
                     <div class="btn-group">
                         <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             REQUEST
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#donate" href="donate.html">Donate</a></li>
-                            <li><a class="dropdown-item" href="clint-request.html">Request Blood</a></li>
+                            <li><a class="dropdown-item" href="{{route('donateRequest')}}" href="donate.html">Donate</a></li>
+                            <li><a class="dropdown-item" href="{{route('getRequest')}}">Request Blood</a></li>
                         </ul>
                     </div>
                 </ul>

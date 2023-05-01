@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
-
+use App\Models\ClientRequest;
 class Tester extends Model
 {
     use HasFactory;
@@ -16,5 +16,9 @@ class Tester extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function clientRequest()
+    {
+        return $this->belongsTo(ClientRequest::class , 'tester_id' , 'id');
     }
 }
